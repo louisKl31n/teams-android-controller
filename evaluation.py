@@ -7,7 +7,7 @@ import time
 if __name__ == '__main__' :
     web_server = "http://127.0.0.1:5000"
     device_name1 = 'RFCX218QHKX'
-    email1 = 'user03.ITS@tpmorangefrpp.onmicrosoft.com
+    email1 = 'user03.ITS@tpmorangefrpp.onmicrosoft.com'
     token1 = 0
     phoneNumberWebexBeta1 = '0789182612'
 

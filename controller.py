@@ -170,7 +170,7 @@ class Controller:
             'platformName' : 'Android',
             'platformVersion' : '13',
             'appPackage': 'com.microsoft.teams',
-            'appActivity': 'com.microsoft.skype.teams',
+            'appActivity': 'com.microsoft.skype.teams.Launcher',
             'autoGrantPermissions': True,
             'newCommandTimeout': 300
         }

@@ -168,7 +168,7 @@ class Controller:
             'udid' : self.device_name,
             'automationName' : 'UiAutomator2',
             'platformName' : 'Android',
-            'platformVersion' : '13',
+            'platformVersion' : '14',
             'appPackage': 'com.microsoft.teams',
             'appActivity': 'com.microsoft.skype.teams.Launcher',
             'autoGrantPermissions': True,

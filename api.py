@@ -67,9 +67,9 @@ def api_connect():
 def api_log_in():
     device = authenticate_request(request)
     email = request.json['email']
-    password = request.json['password']
+    #password = request.json['password']
     if(device != False) :
-        device.webex_log_in(email,password)
+        device.teams_log_in(email)
         response = jsonify('Log in worked as expected')
         response.status_code = 200
     else :

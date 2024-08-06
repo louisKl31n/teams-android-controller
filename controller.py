@@ -182,52 +182,25 @@ class Controller:
 
 
 
-    def teams_log_in(self,email,password) :
+    def teams_log_in(self,email) :
         """
         teams_log_in function does the whole process of login in 
-
+        
         :param email: is the email used through the process
         :param password: is the password used through the process
         """
-        
-        
-
-    def webex_log_in(self,email,password) :
-        """
-        webex_log_in function does the whole process of login in 
-
-        :param email: is the email used through the process
-        :param password: is the password used through the process
-        """
-        
-        # Connection process inside the Webex application
-        connection_button = self.find_by_XPATH('//android.widget.ScrollView/android.view.View[3]/android.widget.Button')
-        connection_button.click()
-        email_address_field = self.find_by_XPATH('//android.widget.TextView[@text="Adresse électronique"]/../..')
+        # Account choice
+        create_account_button = self.find_by_id('com.microsoft.teams:id/create_account_button')
+        create_account_button.click()
+        email_address_field = self.find_by_id('com.microsoft.teams:id/edit_email_refresh')
         email_address_field.send_keys(email)
-        next_button = self.find_by_XPATH('//android.widget.ScrollView/android.view.View/android.widget.Button')
+        next_button = self.find_by_id('com.microsoft.teams:id/sign_in_button_refresh')
         next_button.click()
-        # Connection process inside the Orange webview
-        self.wait_until_element_is_displayed('//android.webkit.WebView[@text="Authentication B2B"]',10)
-        orange_portal_webview = self.find_by_XPATH('//android.webkit.WebView[@text="Authentication B2B"]')
-        orange_portal_id = self.find_by_XPATH_inside_parent(orange_portal_webview,'//android.widget.EditText')
-        orange_portal_id.send_keys(email)
-            # in order to have the connection button visible we need swipe
-        self.swipe_vertical(300)
-        orange_portal_next = self.find_by_XPATH_inside_parent(orange_portal_webview,'//android.widget.Button[@text="Suivant"]')
-        orange_portal_next.click()
-            # wait until the page loads to password view
-        self.wait_until_element_is_displayed('//android.view.View[@text="Saisissez votre mot de passe"]',10)
-        self.swipe_vertical(500)
-        orange_portal_webview = self.find_by_XPATH('//android.webkit.WebView[@text="Authentication B2B"]')
-        orange_portal_password = self.find_by_XPATH_inside_parent(orange_portal_webview,'//android.widget.EditText')
-        orange_portal_password.send_keys(password)
-            # in order to have the connection button visible we need swipe
-        orange_portal_connect = self.find_by_XPATH_inside_parent(orange_portal_webview,'//android.widget.Button[@text="Se connecter"]')
-        orange_portal_connect.click()
-        # Check for a toasts from the application and accept it
+
         try :   
-            self.wait_until_element_is_displayed('(//android.widget.ImageView[@resource-id="com.cisco.wx2.android:id/avatarBackground"])[1]',10)
+            self.wait_until_element_is_displayed('//android.widget.TextView[@resource-id="com.microsoft.teams:id/fmc_fre_sub_title"]',10)
+            yes_button = self.find_by_id('com.microsoft.teams:id/fmc_fre_phone_number_yes')
+            yes_button.click()
         except :
             pass
-        print('=> webex_log_in() success')
+        self.wait_until_element_is_displayed('//android.widget.TextView[@resource-id="com.microsoft.teams:id/fre_all_done_subtitle_text"]')

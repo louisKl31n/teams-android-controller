@@ -6,7 +6,7 @@ import time
 
 if __name__ == '__main__' :
     web_server = "http://127.0.0.1:5000"
-    device_name1 = 'R3CR405S9DH'
+    device_name1 = 'RZCW816D12R'
     email1 = 'qlan3webex@gmail.com'
     token1 = 0
     phoneNumberWebexBeta1 = '0789182612'
@@ -17,7 +17,7 @@ if __name__ == '__main__' :
         
         response = requests.post(web_server+'/connect', json={'deviceName': device_name1})
         token1 = response.json()['token']
-        requests.post(web_server+'/log-in-bis', json={
+        requests.post(web_server+'/log-in', json={
                 'deviceName': device_name1,
                 'email': email1,
                 'password': '1Sac2billes!',

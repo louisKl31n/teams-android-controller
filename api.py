@@ -76,6 +76,18 @@ def api_log_in():
         response.status_code = 401
     return response
 
+@app.route('/call_teams', methods=['POST'])
+def api_call_teams():
+    device = authenticate_request(request)
+    callee_number = request.json['callee number']
+    if(device != False) :
+        device.teams_app_call(callee_number)
+        response = jsonify('Appel successful')
+        response.status_code = 200
+    return response
+
+
+
 
 if __name__ == '__main__' :
     app.run(host='0.0.0.0', port=5000)

@@ -157,7 +157,9 @@ class Controller:
             else :
                 self.print_log(' > Displayed')
                 return
-
+    def app_clear_cache(app_package) :
+        command = f"adb shell pm clear {app_package}"
+        subprocess.run(command, shell=True)
     def teams_launch_app(self,appium_server) :
     
         self.appium_server_ip = appium_server
@@ -179,6 +181,48 @@ class Controller:
         self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
         return self.driver
     
+    def dialer_launch_app(self,appium_server) :
+        self.appium_server_ip = appium_server
+        #Capabilities configuration
+        capabilities = {
+            'udid' : self.device_name,
+            'automationName' : 'UiAutomator2',
+            'platformName' : 'Android',
+            'platformVersion' : '14',
+            'appPackage': 'com.samsung.android.dialer',
+            'appActivity': 'com.samsung.android.dialer.DialtactsActivity',
+            'autoGrantPermissions': True,
+            'newCommandTimeout': 300
+        }
+        appium_options = AppiumOptions()
+        appium_options.load_capabilities(capabilities)
+
+        # WebDriver Initialization
+        self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
+        return self.driver
+    def native_call(self,callee_number) :
+        input_number_container = self.find_by_XPATH('//android.widget.EditText[@resource-id="com.samsung.android.dialer:id/digits"]')
+        input_number_container.send_keys(callee_number)
+        dial_button = self.find_by_XPATH('//android.widget.ImageView[@resource-id="com.samsung.android.dialer:id/dialButtonImage"]')
+        dial_button.click()
+        time.sleep(2)
+
+    def teams_app_call(self,callee_number) :
+        calls_icon = self.find_by_XPATH('//android.view.ViewGroup[@content-desc="Onglet Appels,5 sur 6, non sélectionné, nouveau"]')
+        calls_icon.click()
+
+        dial_call = self.find_by_XPATH('//android.widget.Button[@content-desc="Passer un appel"]')
+        dial_call.click()
+
+        input_number_container = self.find_by_id("com.microsoft.teams:id/phone_number")
+        input_number_container.send_keys(callee_number)
+        dial_button = self.find_by_XPATH('//android.widget.Button[@content-desc="Appeler"]')
+        dial_button.click()
+
+    def teams_app_hangup() :
+        hang_up_button = self.find_by_XPATH('//android.widget.Button[@content-desc="Raccrocher"]')
+        hang_up_button.click()
+
     def teams_log_in(self,email) :
         """
         teams_log_in function does the whole process of login in 
@@ -186,6 +230,8 @@ class Controller:
         :param email: is the email used through the process
         :param password: is the password used through the process
         """
+        # Teams App Cache Clearing
+        self.app_clear_cache('com.microsoft.teams')
         # Account choice
         create_account_button = self.find_by_id('com.microsoft.teams:id/create_account_button')
         create_account_button.click()

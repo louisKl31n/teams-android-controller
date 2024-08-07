@@ -84,3 +84,4 @@ if __name__ == '__main__' :
     appium_service.start(args=['-p 4724','--allow-insecure=Adb-shell'])
     subprocess.run(["adb","start-server"])
     subprocess.run(["./startAppiumServers"])
+

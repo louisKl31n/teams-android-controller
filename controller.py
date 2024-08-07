@@ -200,6 +200,7 @@ class Controller:
         # WebDriver Initialization
         self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
         return self.driver
+    
     def native_call(self,callee_number) :
         input_number_container = self.find_by_XPATH('//android.widget.EditText[@resource-id="com.samsung.android.dialer:id/digits"]')
         input_number_container.send_keys(callee_number)

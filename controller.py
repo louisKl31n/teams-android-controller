@@ -158,7 +158,7 @@ class Controller:
                 self.print_log(' > Displayed')
                 return
 
-    def connect_to_device(self,appium_server) :
+    def teams_launch_app(self,appium_server) :
     
         self.appium_server_ip = appium_server
         #Capabilities configuration
@@ -167,8 +167,8 @@ class Controller:
             'automationName' : 'UiAutomator2',
             'platformName' : 'Android',
             'platformVersion' : '14',
-            #'appPackage': 'com.microsoft.teams',
-            #'appActivity': 'com.microsoft.skype.teams.Launcher',
+            'appPackage': 'com.microsoft.teams',
+            'appActivity': 'com.microsoft.skype.teams.Launcher',
             'autoGrantPermissions': True,
             'newCommandTimeout': 300
         }
@@ -179,11 +179,6 @@ class Controller:
         self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
         return self.driver
     
-    def teams_launch_app(self,appium_server) :
-        driver = self.connect_to_device(appium_server)
-        driver.start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
-
-
     def teams_log_in(self,email) :
         """
         teams_log_in function does the whole process of login in 

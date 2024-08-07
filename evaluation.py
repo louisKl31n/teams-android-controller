@@ -7,6 +7,7 @@ from controller import Controller as contr
 
 if __name__ == '__main__' :
     web_server = "http://127.0.0.1:5000"
+    appium_server = "http://127.0.0.1:4723"
     device_name1 = 'RFCX218QHKX'
     email1 = 'user03.ITS@tpmorangefrpp.onmicrosoft.com'
     token1 = 0
@@ -18,7 +19,7 @@ if __name__ == '__main__' :
         token1 = response.json()['token']
 
         #TeamsLaunching
-        contr.connect_to_device(web_server).start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
+        contr.connect_to_device(appium_server).start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
 
         requests.post(web_server+'/log-in', json={
                 'deviceName': device_name1,

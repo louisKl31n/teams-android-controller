@@ -180,7 +180,7 @@ class Controller:
         return self.driver
     
     def teams_launch_app(self,appium_server) :
-        driver = self.connect_to_device(self,appium_server)
+        driver = self.connect_to_device(appium_server)
         driver.start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
 
 

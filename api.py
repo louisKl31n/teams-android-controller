@@ -12,15 +12,13 @@ appium_servers ={
     'http://127.0.0.1:4723':'free'
 }
 
-
 def authenticate_request(request):
     data = request.json
     device_name = data['deviceName']
     token = data['token']
     print(devices)
     for device in devices.values():
-        print('device')
-        print(device)
+        print('device', device)
         print(device.appium_server_ip)
         print(device.driver)
     if devices[device_name].token == token :
@@ -51,7 +49,7 @@ def api_connect():
             if(appium_server_status=='free'):
                 new_device_appium_server_address = appium_server_address
         appium_servers[appium_server_address] = 'used'
-        if new_device.teams_launch_app(new_device_appium_server_address):
+        if new_device.connect_to_device(new_device_appium_server_address):
             devices[device_name] = new_device
             print(devices)
             response = jsonify({
@@ -65,6 +63,7 @@ def api_connect():
 
 @app.route('/log-in', methods=['POST'])
 def api_log_in():
+
     device = authenticate_request(request)
     email = request.json['email']
     #password = request.json['password']
@@ -85,5 +84,3 @@ if __name__ == '__main__' :
     appium_service.start(args=['-p 4724','--allow-insecure=Adb-shell'])
     subprocess.run(["adb","start-server"])
     subprocess.run(["./startAppiumServers"])
-
-    

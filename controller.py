@@ -158,28 +158,30 @@ class Controller:
                 self.print_log(' > Displayed')
                 return
 
-    def teams_launch_app(self,appium_server) :
-        """
-        launch_app launches a fresh inctance of the teams app
-        """
-
+    def connect_to_device(self,appium_server) :
+    
         self.appium_server_ip = appium_server
+        #Capabilities configuration
         capabilities = {
             'udid' : self.device_name,
             'automationName' : 'UiAutomator2',
             'platformName' : 'Android',
             'platformVersion' : '14',
-            'appPackage': 'com.microsoft.teams',
-            'appActivity': 'com.microsoft.skype.teams.Launcher',
+            #'appPackage': 'com.microsoft.teams',
+            #'appActivity': 'com.microsoft.skype.teams.Launcher',
             'autoGrantPermissions': True,
             'newCommandTimeout': 300
         }
         appium_options = AppiumOptions()
         appium_options.load_capabilities(capabilities)
-        # Start appium server
-        self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
-        return True
 
+        # WebDriver Initialization
+        self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
+        return self.driver
+    
+    def teams_launch_app(self,appium_server) :
+        driver = self.connect_to_device(self,appium_server)
+        driver.start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
 
 
     def teams_log_in(self,email) :

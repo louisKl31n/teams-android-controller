@@ -2,7 +2,7 @@ from csv import writer
 import requests
 from datetime import datetime
 import time
-from controller import Controller as contr
+from controller import Controller
 
 
 if __name__ == '__main__' :
@@ -19,7 +19,7 @@ if __name__ == '__main__' :
         token1 = response.json()['token']
 
         #TeamsLaunching
-        contr.connect_to_device("http://127.0.0.1:4723").start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
+         #connect_to_device("http://127.0.0.1:4723").start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
 
         requests.post(web_server+'/log-in', json={
                 'deviceName': device_name1,

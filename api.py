@@ -49,7 +49,7 @@ def api_connect():
             if(appium_server_status=='free'):
                 new_device_appium_server_address = appium_server_address
         appium_servers[appium_server_address] = 'used'
-        if new_device.connect_to_device(new_device_appium_server_address):
+        if new_device.teams_launch_app(new_device_appium_server_address):
             devices[device_name] = new_device
             print(devices)
             response = jsonify({

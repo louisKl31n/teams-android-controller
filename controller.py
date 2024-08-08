@@ -160,8 +160,8 @@ class Controller:
     def app_clear_cache(app_package) :
         command = f"adb shell pm clear {app_package}"
         subprocess.run(command, shell=True)
-    def teams_launch_app(self,appium_server) :
-    
+
+    def connect_device(self,appium_server) :
         self.appium_server_ip = appium_server
         #Capabilities configuration
         capabilities = {
@@ -169,8 +169,8 @@ class Controller:
             'automationName' : 'UiAutomator2',
             'platformName' : 'Android',
             'platformVersion' : '14',
-            'appPackage': 'com.microsoft.teams',
-            'appActivity': 'com.microsoft.skype.teams.Launcher',
+         #   'appPackage': 'com.microsoft.teams',
+         #   'appActivity': 'com.microsoft.skype.teams.Launcher',
             'autoGrantPermissions': True,
             'newCommandTimeout': 300
         }
@@ -179,29 +179,21 @@ class Controller:
 
         # WebDriver Initialization
         self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
-        return self.driver
     
-    def dialer_launch_app(self,appium_server) :
-        self.appium_server_ip = appium_server
-        #Capabilities configuration
-        capabilities = {
-            'udid' : self.device_name,
-            'automationName' : 'UiAutomator2',
-            'platformName' : 'Android',
-            'platformVersion' : '14',
-            'appPackage': 'com.samsung.android.dialer',
-            'appActivity': 'com.samsung.android.dialer.DialtactsActivity',
-            'autoGrantPermissions': True,
-            'newCommandTimeout': 300
-        }
-        appium_options = AppiumOptions()
-        appium_options.load_capabilities(capabilities)
+    def teams_launch_app(self) :
+        self.driver.start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
+        return True
+    
+    def dialer_launch_app(self) :
+        self.driver.driver.start_activity('com.samsung.android.dialer','com.samsung.android.dialer')
+        return True
+    
+    def driver_quit(self) :
+        self.driver.quit()
 
-        # WebDriver Initialization
-        self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
-        return self.driver
-    
     def native_call(self,callee_number) :
+        self.dialer_launch_app()
+        time.sleep(5)
         input_number_container = self.find_by_XPATH('//android.widget.EditText[@resource-id="com.samsung.android.dialer:id/digits"]')
         input_number_container.send_keys(callee_number)
         dial_button = self.find_by_XPATH('//android.widget.ImageView[@resource-id="com.samsung.android.dialer:id/dialButtonImage"]')
@@ -209,6 +201,8 @@ class Controller:
         time.sleep(2)
 
     def teams_app_call(self,callee_number) :
+        self.teams_launch_app()
+        time.sleep(5)
         calls_icon = self.find_by_XPATH('//android.view.ViewGroup[@content-desc="Onglet Appels,5 sur 6, non sélectionné, nouveau"]')
         calls_icon.click()
 

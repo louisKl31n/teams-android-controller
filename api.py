@@ -49,7 +49,7 @@ def api_connect():
             if(appium_server_status=='free'):
                 new_device_appium_server_address = appium_server_address
         appium_servers[appium_server_address] = 'used'
-        if new_device.teams_launch_app(new_device_appium_server_address):
+        if new_device.connect_device(new_device_appium_server_address):
             devices[device_name] = new_device
             print(devices)
             response = jsonify({
@@ -63,12 +63,11 @@ def api_connect():
 
 @app.route('/log-in', methods=['POST'])
 def api_log_in():
-
     device = authenticate_request(request)
     email = request.json['email']
-    #password = request.json['password']
+    password = request.json['password']
     if(device != False) :
-        device.teams_log_in(email)
+        device.teams_log_in(email,password)
         response = jsonify('Log in worked as expected')
         response.status_code = 200
     else :
@@ -86,7 +85,15 @@ def api_call_teams():
         response.status_code = 200
     return response
 
-
+@app.route('/call_native', methods=['POST'])
+def api_call_native():
+    device = authenticate_request(request)
+    callee_number = request.json['callee number']
+    if(device != False) :
+        device.native_call(callee_number)
+        response = jsonify('Appel successful')
+        response.status_code = 200
+    return response
 
 
 if __name__ == '__main__' :

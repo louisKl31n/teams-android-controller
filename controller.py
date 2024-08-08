@@ -22,9 +22,8 @@ class Controller:
     frequency = 8 # Frequency of checks in Hz
     display_log = False
 
-    def __init__(self,device_name,driver):
+    def __init__(self,device_name):
         Controller.device_name = device_name
-        self.driver = driver
         print(device_name)
 
     def swipe_vertical(self,px) :

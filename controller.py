@@ -185,8 +185,10 @@ class Controller:
     
     def teams_launch_app(self) :
         try:
-            self.driver.start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
-            self.driver
+            self.driver.execute_script('mobile: startActivity', {
+                'appPackage': 'com.microsoft.teams',
+                'appActivity': 'com.microsoft.skype.teams.Launcher'
+            })
             time.sleep(5)
             print("Microsoft Teams lancé avec succès.")
         except Exception as e:
@@ -195,7 +197,10 @@ class Controller:
         return True
     
     def dialer_launch_app(self) :
-        self.driver.start_activity('com.samsung.android.dialer','com.samsung.android.dialer')
+        self.driver.execute_script('mobile: startActivity', {
+                'appPackage': 'com.samsung.android.dialer',
+                'appActivity': 'com.samsung.android.dialer'
+            })
         time.sleep(5)
         return True
     

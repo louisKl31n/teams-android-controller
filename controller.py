@@ -183,11 +183,13 @@ class Controller:
         return True
     
     def teams_launch_app(self) :
+        intent = {
+            'action': 'android.intent.action.MAIN',
+            'package': 'com.microsoft.teams',
+            'component': 'com.microsoft.teams/com.microsoft.teams.Launcher'
+        }
         try:
-            self.driver.execute_script('mobile: startActivity', {
-                'appPackage': 'com.microsoft.teams',
-                'appActivity': 'com.microsoft.skype.teams.Launcher'
-            })
+            self.driver.execute_script('mobile: startActivity', intent)
             time.sleep(5)
             print("Microsoft Teams lancé avec succès.")
         except Exception as e:

@@ -22,8 +22,9 @@ class Controller:
     frequency = 8 # Frequency of checks in Hz
     display_log = False
 
-    def __init__(self,device_name):
+    def __init__(self,device_name,driver):
         Controller.device_name = device_name
+        self.driver = driver
         print(device_name)
 
     def swipe_vertical(self,px) :
@@ -181,12 +182,13 @@ class Controller:
         # WebDriver Initialization
         self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
         return True
+    
     def teams_launch_app(self) :
         self.driver.start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
         return True
     
     def dialer_launch_app(self) :
-        self.driver.driver.start_activity('com.samsung.android.dialer','com.samsung.android.dialer')
+        self.driver.start_activity('com.samsung.android.dialer','com.samsung.android.dialer')
         return True
     
     def driver_quit(self) :

@@ -172,14 +172,15 @@ class Controller:
             'appPackage': 'com.microsoft.teams',
             'appActivity': 'com.microsoft.skype.teams.Launcher',
             'autoGrantPermissions': True,
-            'newCommandTimeout': 300
+            'newCommandTimeout': 3000,
+            'noReset': True
         }
         appium_options = AppiumOptions()
         appium_options.load_capabilities(capabilities)
 
         # WebDriver Initialization
         self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
-    
+        return True
     def teams_launch_app(self) :
         self.driver.start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
         return True
@@ -214,11 +215,11 @@ class Controller:
         dial_button = self.find_by_XPATH('//android.widget.Button[@content-desc="Appeler"]')
         dial_button.click()
 
-    def teams_app_hangup() :
+    def teams_app_hangup(self) :
         hang_up_button = self.find_by_XPATH('//android.widget.Button[@content-desc="Raccrocher"]')
         hang_up_button.click()
 
-    def teams_log_in(self,email) :
+    def teams_log_in(self,email,password) :
         """
         teams_log_in function does the whole process of login in 
         

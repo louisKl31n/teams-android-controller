@@ -27,6 +27,8 @@ if __name__ == '__main__' :
         })
 """
         requests.post(web_server+'/call_teams', json={
+                'deviceName': device_name1,
+                'token': token1,
                 'callee_number' : pstn,
 
         })

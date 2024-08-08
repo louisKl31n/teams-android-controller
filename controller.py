@@ -169,8 +169,8 @@ class Controller:
             'automationName' : 'UiAutomator2',
             'platformName' : 'Android',
             'platformVersion' : '14',
-         #   'appPackage': 'com.microsoft.teams',
-         #   'appActivity': 'com.microsoft.skype.teams.Launcher',
+            'appPackage': 'com.microsoft.teams',
+            'appActivity': 'com.microsoft.skype.teams.Launcher',
             'autoGrantPermissions': True,
             'newCommandTimeout': 300
         }

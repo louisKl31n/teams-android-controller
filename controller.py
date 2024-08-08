@@ -158,7 +158,7 @@ class Controller:
             else :
                 self.print_log(' > Displayed')
                 return
-    def app_clear_cache(app_package) :
+    def app_clear_cache(self,app_package) :
         command = f"adb shell pm clear {app_package}"
         subprocess.run(command, shell=True)
 
@@ -184,11 +184,18 @@ class Controller:
         return True
     
     def teams_launch_app(self) :
-        self.driver.start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
+        try:
+            self.driver.start_activity('com.microsoft.teams','com.microsoft.skype.teams.Launcher')
+            time.sleep(5)
+            print("Microsoft Teams lancé avec succès.")
+        except Exception as e:
+            print(f"Erreur lors du lancement de Microsoft Teams : {str(e)}")
+            return False
         return True
     
     def dialer_launch_app(self) :
         self.driver.start_activity('com.samsung.android.dialer','com.samsung.android.dialer')
+        time.sleep(5)
         return True
     
     def driver_quit(self) :
@@ -205,7 +212,7 @@ class Controller:
 
     def teams_app_call(self,callee_number) :
         self.teams_launch_app()
-        time.sleep(5)
+        
         calls_icon = self.find_by_XPATH('//android.view.ViewGroup[@content-desc="Onglet Appels,5 sur 6, non sélectionné, nouveau"]')
         calls_icon.click()
 
@@ -229,7 +236,7 @@ class Controller:
         :param password: is the password used through the process
         """
         # Teams App Cache Clearing
-        self.app_clear_cache('com.microsoft.teams')
+      #  self.app_clear_cache('com.microsoft.teams')
         # Account choice
         create_account_button = self.find_by_id('com.microsoft.teams:id/create_account_button')
         create_account_button.click()

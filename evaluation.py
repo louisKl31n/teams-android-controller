@@ -17,6 +17,7 @@ if __name__ == '__main__' :
         current_time = datetime.now().time()
         response = requests.post(web_server+'/connect', json={'deviceName': device_name1})
         token1 = response.json()['token']
+
         """
         requests.post(web_server+'/log-in', json={
                 'deviceName': device_name1,
@@ -26,7 +27,7 @@ if __name__ == '__main__' :
         })
 """
         requests.post(web_server+'/call_teams', json={
-                'callee number' : pstn,
+                'callee_number' : pstn,
 
         })
         time.sleep(20)

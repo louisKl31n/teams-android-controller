@@ -1,6 +1,5 @@
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.android.webdriver import WebDriver as AndroidDriver
 from appium.options.common import AppiumOptions
 from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
@@ -180,7 +179,7 @@ class Controller:
         appium_options.load_capabilities(capabilities)
 
         # WebDriver Initialization
-        self.driver = AndroidDriver.Remote(self.appium_server_ip,options=appium_options)
+        self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
         return True
     
     def teams_launch_app(self) :

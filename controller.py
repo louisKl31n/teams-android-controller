@@ -182,20 +182,23 @@ class Controller:
         self.driver = webdriver.Remote(self.appium_server_ip,options=appium_options)
         return True
     
-    def teams_launch_app(self) :
+    def teams_launch_app(self):
         intent = {
-            'action': 'android.intent.action.MAIN',
-            'package': 'com.microsoft.teams',
-            'component': 'com.microsoft.teams/com.microsoft.teams.Launcher'
+            'appPackage': 'com.microsoft.teams',
+            'appActivity': 'com.microsoft.teams.Launcher'
         }
         try:
-            self.driver.execute_script('mobile: startActivity', intent)
+            self.driver.execute_script('mobile: startActivity', {
+                'appPackage': intent['appPackage'],
+                'appActivity': intent['appActivity']
+            })
             time.sleep(5)
             print("Microsoft Teams lancé avec succès.")
         except Exception as e:
             print(f"Erreur lors du lancement de Microsoft Teams : {str(e)}")
             return False
         return True
+
     
     def dialer_launch_app(self) :
         self.driver.execute_script('mobile: startActivity', {
